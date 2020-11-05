@@ -41,13 +41,13 @@ char ding2(){
 int findint(char ch){
 	int t;
 	switch(ch){
-		case '+':t=0;syn=1;break;
-		case '*':t=1;syn=1;break;
-		case 'i':t=2;syn=1;break;
-		case '(':t=3;syn=1;break;
-		case ')':t=4;syn=1;break;
-		case '#':t=5;syn=0;break;
-		default:syn=-1;break;
+		case '+':t=0;break;
+		case '*':t=1;break;
+		case 'i':t=2;break;
+		case '(':t=3;break;
+		case ')':t=4;break;
+		case '#':t=5;break;
+//		default:syn=-1;break;
 	}
 	return t;
 }
@@ -66,10 +66,10 @@ void analyse(){
 	while(zh!='#'||ch!='#'){
 		a=findint(zh);
 		b=findint(ch);
-//		if(a==-1||b==-1){
-////			printf("E\n");
-//			return;
-//		}
+		if(a==-1||b==-1){
+//			printf("E\n");
+			return;
+		}
 		
 		if(table[a][b]==-1){// 推进 
 			push(ch);
