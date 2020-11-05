@@ -41,12 +41,13 @@ char ding2(){
 int findint(char ch){
 	int t;
 	switch(ch){
-		case '+':t=0;break;
-		case '*':t=1;break;
-		case 'i':t=2;break;
-		case '(':t=3;break;
-		case ')':t=4;break;
-		case '#':t=5;
+		case '+':t=0;syn=1;break;
+		case '*':t=1;syn=1;break;
+		case 'i':t=2;syn=1;break;
+		case '(':t=3;syn=1;break;
+		case ')':t=4;syn=1;break;
+		case '#':t=5;syn=1;break;
+		default:t=-1;syn=-1;break;
 	}
 	return t;
 }
@@ -65,6 +66,11 @@ void analyse(){
 	while(zh!='#'||ch!='#'){
 		a=findint(zh);
 		b=findint(ch);
+		if(a==-1||b==-1){
+//			printf("E\n");
+			return;
+		}
+		
 		if(table[a][b]==-1){// 推进 
 			push(ch);
 			j++;
@@ -73,6 +79,14 @@ void analyse(){
 		else if(table[a][b]==1){// 规约 
 			int m,i;
 			zh=ding2();
+//			if(zh!='N'){
+//				scaner(zh);
+//				if(syn==-1){
+//					printf("E\n");
+//					return;
+//				}
+//			}
+			
 			if(zh=='i')
 				pop();
 			else if(zh=='*' || zh=='+'){
@@ -107,11 +121,9 @@ void loadch(){
 	zhongjian[zi-1]='#';
 }
 
-void scaner(){
+void scaner(char cc){
 	syn=1;
-	ch=zhongjian[p++];
-	
-	switch(ch){
+	switch(cc){
 		case '+':
 		case '*':
 		case '(':
@@ -123,19 +135,19 @@ void scaner(){
 	} 
 }
 
-void saomiao(){
-	p=0;
-	q=0;
-	do{
-		scaner();
-		if(syn==-1){
-			printf("E\n");
-			break; 
-		} 
-		//当读到末尾 # 时，使用syn标记，syn=0 
-	}while(syn!=0);
-	
-}
+//void saomiao(){
+//	p=0;
+//	q=0;
+//	do{
+//		scaner();
+//		if(syn==-1){
+//			printf("E\n");
+//			break; 
+//		} 
+//		//当读到末尾 # 时，使用syn标记，syn=0 
+//	}while(syn!=0);
+//	
+//}
 
 int main(int argc, char *argv[]){
 	//读入句子到prog，并以 # 结尾
@@ -143,17 +155,31 @@ int main(int argc, char *argv[]){
 	loadch();
 	
 	//查看输入的句子中的字符是否合法，并把去掉空格的句子存入zhongjian[] 
-	saomiao();
+//	saomiao();
 	
 	//若读入的句子合法且完整 
 	if(syn==0){
 		//初始化 
 		chu();
+		scaner(zh);
+		if(syn==-1){
+			printf("E\n");
+			return 0;
+		}
+		
+		scaner(ch);
+		if(syn==-1){
+			printf("E\n");
+			return 0;
+		}
 		
 		//opg
 		analyse();
 		
-		if(syn!=0) printf("E\n");
+		if(syn!=0) {
+			printf("E\n");
+			return 0;
+		}
 	} 
 	
 } 
