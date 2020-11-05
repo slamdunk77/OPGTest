@@ -2,7 +2,7 @@
 #include<string.h>
 #include<stdlib.h>
 
-char zhongjian[100],zhan[100];
+char zhongjian[1010],zhan[1010];
 char ch,zh,input_c;
 int syn,p,q,a,b,c,d,z,j;
 FILE *fp;
@@ -65,12 +65,12 @@ void analyse(){
 	while(zh!='#'||ch!='#'){
 		a=findint(zh);
 		b=findint(ch);
-		if(table[a][b]==-1){// ÍÆ½ø 
+		if(table[a][b]==-1){// æ¨è¿› 
 			push(ch);
 			j++;
 			printf("I%c\n",ch);
 		}
-		else if(table[a][b]==1){// ¹æÔ¼ 
+		else if(table[a][b]==1){// è§„çº¦ 
 			int m,i;
 			zh=ding2();
 			if(zh=='i')
@@ -95,7 +95,7 @@ void analyse(){
 }
 
 void loadch(){
-	// ¶ÁÈë¾ä×Óµ½prog£¬²¢ÒÔ # ½áÎ² 
+	// è¯»å…¥å¥å­åˆ°progï¼Œå¹¶ä»¥ # ç»“å°¾ 
 //	scanf("%s",zhongjian);
 //	zhongjian[strlen(zhongjian)]='#';
 	int zi=0;
@@ -118,7 +118,7 @@ void scaner(){
 		case ')':
 		case 'i':break;
 		case '#':syn=0;break;
-		// ÈôÊäÈëÆäËû×Ö·û 
+		// è‹¥è¾“å…¥å…¶ä»–å­—ç¬¦ 
 		default:syn=-1;break;
 	} 
 }
@@ -132,22 +132,22 @@ void saomiao(){
 			printf("E\n");
 			break; 
 		} 
-		//µ±¶Áµ½Ä©Î² # Ê±£¬Ê¹ÓÃsyn±ê¼Ç£¬syn=0 
+		//å½“è¯»åˆ°æœ«å°¾ # æ—¶ï¼Œä½¿ç”¨synæ ‡è®°ï¼Œsyn=0 
 	}while(syn!=0);
 	
 }
 
 int main(int argc, char *argv[]){
-	//¶ÁÈë¾ä×Óµ½prog£¬²¢ÒÔ # ½áÎ²
+	//è¯»å…¥å¥å­åˆ°progï¼Œå¹¶ä»¥ # ç»“å°¾
 	fp = fopen(argv[1], "r");
 	loadch();
 	
-	//²é¿´ÊäÈëµÄ¾ä×ÓÖĞµÄ×Ö·ûÊÇ·ñºÏ·¨£¬²¢°ÑÈ¥µô¿Õ¸ñµÄ¾ä×Ó´æÈëzhongjian[] 
+	//æŸ¥çœ‹è¾“å…¥çš„å¥å­ä¸­çš„å­—ç¬¦æ˜¯å¦åˆæ³•ï¼Œå¹¶æŠŠå»æ‰ç©ºæ ¼çš„å¥å­å­˜å…¥zhongjian[] 
 	saomiao();
 	
-	//Èô¶ÁÈëµÄ¾ä×ÓºÏ·¨ÇÒÍêÕû 
+	//è‹¥è¯»å…¥çš„å¥å­åˆæ³•ä¸”å®Œæ•´ 
 	if(syn==0){
-		//³õÊ¼»¯ 
+		//åˆå§‹åŒ– 
 		chu();
 		
 		//opg
@@ -157,7 +157,6 @@ int main(int argc, char *argv[]){
 	} 
 	
 } 
-
 
 
 
