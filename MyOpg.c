@@ -41,19 +41,15 @@ char get_stack2(){
 
 int f_int(char str_c){
 	int t;
-	if(str_c=='+')
-		t=0;
-	else if(str_c=='*')
-		t=1;
-	else if(str_c=='(')
-		t=2;
-	else if(str_c==')')
-		t=3;
-	else if(str_c=='i')
-		t=4;
-	else if(str_c=='#')
-		t=5;
-	else t=-1;
+	switch(str_c){
+		case '+':t=0;break;
+		case '*':t=1;break;
+		case 'i':t=2;break;
+		case '(':t=3;break;
+		case ')':t=4;break;
+		case '#':t=5;break;
+		default:t=-1;break;
+	}
 	return t;
 }
 
@@ -105,7 +101,6 @@ void analyse(){
 }
 
 void get_str(){
-	// 读入句子到prog
 	int zi=0;
 	do{
 		input_c=fgetc(fp);//fgetc(fp)
@@ -117,21 +112,29 @@ void get_str(){
 
 void scaner(char str_c1){
 	dex=1;
-	if(str_c1=='#') dex=0;
-	else if(str_c1!='+'&&str_c1!='*'&&str_c1!='('&&str_c1!=')'&&str_c1!='i') dex=-1;
+	switch(str_c1){
+		case '+':
+		case '*':
+		case '(':
+		case ')':
+		case 'i':break;
+		case '#':index=0;break;
+		// 若输入其他字符 
+		default:index=-1;break;
+	} 
 }
 
 
 int main(int argc, char *argv[]){
-	//读入句子到prog，并以 # 结尾
+	//读入句子，并以 # 结尾
 	fp = fopen(argv[1], "r");
 	get_str();
-	if(dex==0){
+	if(index==0){
 		//初始化 
 		init_();
 		//opg
 		analyse();
-		if(dex!=0) {
+		if(index!=0) {
 			printf("E\n");
 			return 0;
 		}
