@@ -2,10 +2,11 @@
 #include<string.h>
 #include<stdlib.h>
 
-char zhongjian[1010],zhan[1010];
-char ch,zh,input_c;
-int syn,p,q,a,b,c,d,z,j;
+char str[1010],stack[1010];
+char str_c,stack_c,input_c;
+int index,stack_p,str_p,stack_p1,a,b;
 FILE *fp;
+// -1表示小于等于 0表示不可比较 1表示大于 
 int table[6][6]={
 	{1,-1,-1,-1,1,1},
 	{1,1,-1,-1,1,1},
@@ -15,32 +16,32 @@ int table[6][6]={
 	{-1,-1,-1,-1,0,0}
 };
 
-void push(char ch){
-	zhan[z++]=ch;
+void push(char str_c){
+	stack[stack_p++]=str_c;
 }
 
 void pop(){
-	z--;
+	stack_p--;
 }
-char ding(){
-	char a;
-	q=z-1;
+char get_stack1(){
+	char c;
+	stack_p1=stack_p-1;
 	do{
-		a=zhan[q--];
-	}while(a=='N');
-	return a;
+		c=stack[stack_p1--];
+	}while(c=='N');
+	return c;
 }
 
-char ding2(){
-	char a;
-	q=z-1;
-	a=zhan[q];
-	return a;
+char get_stack2(){
+	char c;
+	stack_p1=stack_p-1;
+	c=stack[stack_p1];
+	return c;
 }
 
-int findint(char ch){
+int f_int(char str_c){
 	int t;
-	switch(ch){
+	switch(str_c){
 		case '+':t=0;break;
 		case '*':t=1;break;
 		case 'i':t=2;break;
@@ -53,35 +54,34 @@ int findint(char ch){
 }
 
 void chu(){
-	zhan[0]='#';
-	z=1;
-	c=0;
-	j=0;
-	syn=0;
-	zh=ding();
-	ch=zhongjian[j];
+	stack[0]='#';
+	stack_p=1;
+	str_p=0;
+	index=0;
+	stack_c=get_stack1();
+	str_c=str[str_p];
 }
 
 void analyse(){
-	while(zh!='#'||ch!='#'){
-		a=findint(zh);
-		b=findint(ch);
+	while(stack_c!='#'||str_c!='#'){
+		a=f_int(stack_c);
+		b=f_int(str_c);
 		if(a==-1||b==-1){
 			printf("E\n");
 			return;
 		}
 		
 		if(table[a][b]==-1){// 推进 
-			push(ch);
-			j++;
-			printf("I%c\n",ch);
+			push(str_c);
+			str_p++;
+			printf("I%c\n",str_c);
 		}
 		else if(table[a][b]==1){// 规约 
 			int m,i;
-			zh=ding2();
-			if(zh=='i')
+			stack_c=get_stack2();
+			if(stack_c=='i')
 				pop();
-			else if(zh=='*' || zh=='+'){
+			else if(stack_c=='*' || stack_c=='+'){
 				printf("RE\n");
 				return;
 			}
@@ -92,72 +92,52 @@ void analyse(){
 			printf("R\n");
 		}
 		else{
-			syn=-1;
+			index=-1;
 			break;
 		}
-		zh=ding();
-		ch=zhongjian[j];
+		stack_c=get_stack1();
+		str_c=str[str_p];
 	}
 }
 
-void loadch(){
+void get_str(){
 	// 读入句子到prog，并以 # 结尾 
-//	scanf("%s",zhongjian);
-//	zhongjian[strlen(zhongjian)]='#';
+//	scanf("%s",str);
+//	str[strlen(str)]='#';
 	int zi=0;
 	do{
 		input_c=fgetc(fp);//fgetc(fp)
-		zhongjian[zi]=input_c;
+		str[zi]=input_c;
 		zi++;
-	}while(input_c!='\r'&&zhongjian[zi-1]!='\n');
-	zhongjian[zi-1]='#';
+	}while(input_c!='\r'&&str[zi-1]!='\n');
+	str[zi-1]='#';
 }
 
-void scaner(char ch1){
-	syn=1;
-//	ch=zhongjian[p++];
-	switch(ch1){
+void scaner(char str_c1){
+	index=1;
+	switch(str_c1){
 		case '+':
 		case '*':
 		case '(':
 		case ')':
 		case 'i':break;
-		case '#':syn=0;break;
+		case '#':index=0;break;
 		// 若输入其他字符 
-		default:syn=-1;break;
+		default:index=-1;break;
 	} 
 }
 
-//void saomiao(){
-//	p=0;
-//	q=0;
-//	do{
-//		scaner();
-//		if(syn==-1){
-//			printf("E\n");
-//			break; 
-//		} 
-//		//当读到末尾 # 时，使用syn标记，syn=0 
-//	}while(syn!=0);
-//	
-//}
 
 int main(int argc, char *argv[]){
 	//读入句子到prog，并以 # 结尾
 	fp = fopen(argv[1], "r");
-	loadch();
-	
-	//查看输入的句子中的字符是否合法，并把去掉空格的句子存入zhongjian[] 
-//	saomiao();
-	
-	//若读入的句子合法且完整 
-	if(syn==0){
+	get_str();
+	if(index==0){
 		//初始化 
 		chu();
 		//opg
 		analyse();
-		
-		if(syn!=0) {
+		if(index!=0) {
 			printf("E\n");
 			return 0;
 		}
