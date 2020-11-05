@@ -47,7 +47,7 @@ int findint(char ch){
 		case '(':t=3;syn=1;break;
 		case ')':t=4;syn=1;break;
 		case '#':t=5;syn=1;break;
-		default:t=-1;syn=-1;break;
+		default:syn=-1;break;
 	}
 	return t;
 }
@@ -113,9 +113,10 @@ void loadch(){
 	zhongjian[zi-1]='#';
 }
 
-void scaner(char cc){
+void scaner(){
 	syn=1;
-	switch(cc){
+	ch=zhongjian[p++];
+	switch(ch){
 		case '+':
 		case '*':
 		case '(':
@@ -127,19 +128,19 @@ void scaner(char cc){
 	} 
 }
 
-//void saomiao(){
-//	p=0;
-//	q=0;
-//	do{
-//		scaner();
-//		if(syn==-1){
-//			printf("E\n");
-//			break; 
-//		} 
-//		//当读到末尾 # 时，使用syn标记，syn=0 
-//	}while(syn!=0);
-//	
-//}
+void saomiao(){
+	p=0;
+	q=0;
+	do{
+		scaner();
+		if(syn==-1){
+			printf("E\n");
+			break; 
+		} 
+		//当读到末尾 # 时，使用syn标记，syn=0 
+	}while(syn!=0);
+	
+}
 
 int main(int argc, char *argv[]){
 	//读入句子到prog，并以 # 结尾
@@ -147,7 +148,7 @@ int main(int argc, char *argv[]){
 	loadch();
 	
 	//查看输入的句子中的字符是否合法，并把去掉空格的句子存入zhongjian[] 
-//	saomiao();
+	saomiao();
 	
 	//若读入的句子合法且完整 
 	if(syn==0){
