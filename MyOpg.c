@@ -46,7 +46,7 @@ int findint(char ch){
 		case 'i':t=2;syn=1;break;
 		case '(':t=3;syn=1;break;
 		case ')':t=4;syn=1;break;
-		case '#':t=5;syn=1;break;
+		case '#':t=5;syn=0;break;
 		default:syn=-1;break;
 	}
 	return t;
@@ -154,18 +154,6 @@ int main(int argc, char *argv[]){
 	if(syn==0){
 		//初始化 
 		chu();
-//		scaner(zh);
-//		if(syn==-1){
-//			printf("E\n");
-//			return 0;
-//		}
-//		
-//		scaner(ch);
-//		if(syn==-1){
-//			printf("E\n");
-//			return 0;
-//		}
-		
 		//opg
 		analyse();
 		
