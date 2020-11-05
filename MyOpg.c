@@ -66,10 +66,10 @@ void analyse(){
 	while(zh!='#'||ch!='#'){
 		a=findint(zh);
 		b=findint(ch);
-		if(a==-1||b==-1){
-//			printf("E\n");
-			return;
-		}
+//		if(a==-1||b==-1){
+////			printf("E\n");
+//			return;
+//		}
 		
 		if(table[a][b]==-1){// 推进 
 			push(ch);
