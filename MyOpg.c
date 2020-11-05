@@ -41,19 +41,23 @@ char get_stack2(){
 
 int f_int(char str_c){
 	int t;
-	switch(str_c){
-		case '+':t=0;break;
-		case '*':t=1;break;
-		case 'i':t=2;break;
-		case '(':t=3;break;
-		case ')':t=4;break;
-		case '#':t=5;break;
-		default:t=-1;break;
-	}
+	if(str_c=='+')
+		t=0;
+	else if(str_c=='*')
+		t=1;
+	else if(str_c=='(')
+		t=2;
+	else if(str_c==')')
+		t=3;
+	else if(str_c=='i')
+		t=4;
+	else if(str_c=='#')
+		t=5;
+	else t=-1;
 	return t;
 }
 
-void chu(){
+void init_(){
 	stack[0]='#';
 	stack_p=1;
 	str_p=0;
@@ -101,9 +105,7 @@ void analyse(){
 }
 
 void get_str(){
-	// 读入句子到prog，并以 # 结尾 
-//	scanf("%s",str);
-//	str[strlen(str)]='#';
+	// 读入句子到prog
 	int zi=0;
 	do{
 		input_c=fgetc(fp);//fgetc(fp)
@@ -115,16 +117,8 @@ void get_str(){
 
 void scaner(char str_c1){
 	dex=1;
-	switch(str_c1){
-		case '+':
-		case '*':
-		case '(':
-		case ')':
-		case 'i':break;
-		case '#':dex=0;break;
-		// 若输入其他字符 
-		default:dex=-1;break;
-	} 
+	if(str_c1=='#') dex=0;
+	else if(str_c1!='+'&&str_c1!='*'&&str_c1!='('&&str_c1!=')'&&str_c1!='i') dex=-1;
 }
 
 
@@ -134,7 +128,7 @@ int main(int argc, char *argv[]){
 	get_str();
 	if(dex==0){
 		//初始化 
-		chu();
+		init_();
 		//opg
 		analyse();
 		if(dex!=0) {
