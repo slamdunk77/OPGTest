@@ -118,9 +118,9 @@ void scaner(char str_c1){
 		case '(':
 		case ')':
 		case 'i':break;
-		case '#':index=0;break;
+		case '#':dex=0;break;
 		// 若输入其他字符 
-		default:index=-1;break;
+		default:dex=-1;break;
 	} 
 }
 
@@ -129,12 +129,12 @@ int main(int argc, char *argv[]){
 	//读入句子，并以 # 结尾
 	fp = fopen(argv[1], "r");
 	get_str();
-	if(index==0){
+	if(dex==0){
 		//初始化 
 		init_();
 		//opg
 		analyse();
-		if(index!=0) {
+		if(dex!=0) {
 			printf("E\n");
 			return 0;
 		}
