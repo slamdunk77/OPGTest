@@ -102,15 +102,15 @@ void analyse(){
 
 void loadch(){
 	// 读入句子到prog，并以 # 结尾 
-	scanf("%s",zhongjian);
-	zhongjian[strlen(zhongjian)]='#';
-//	int zi=0;
-//	do{
-//		input_c=fgetc(fp);//fgetc(fp)
-//		zhongjian[zi]=input_c;
-//		zi++;
-//	}while(input_c!='\r'&&zhongjian[zi-1]!='\n');
-//	zhongjian[zi-1]='#';
+//	scanf("%s",zhongjian);
+//	zhongjian[strlen(zhongjian)]='#';
+	int zi=0;
+	do{
+		input_c=fgetc(fp);//fgetc(fp)
+		zhongjian[zi]=input_c;
+		zi++;
+	}while(input_c!='\r'&&zhongjian[zi-1]!='\n');
+	zhongjian[zi-1]='#';
 }
 
 void scaner(char cc){
@@ -143,7 +143,7 @@ void scaner(char cc){
 
 int main(int argc, char *argv[]){
 	//读入句子到prog，并以 # 结尾
-//	fp = fopen(argv[1], "r");
+	fp = fopen(argv[1], "r");
 	loadch();
 	
 	//查看输入的句子中的字符是否合法，并把去掉空格的句子存入zhongjian[] 
