@@ -1,5 +1,5 @@
-[jobs.pascal_lex]
-image = { source = "dockerfile", path = ".", tag = "pascal-lexer-test" }
+[jobs.opg]
+image = { source = "dockerfile", path = ".", tag = "opg-test" }
 run = [
-  "./LexicalAnalysis $input",
+  "./MyOpg $input",
 ]
